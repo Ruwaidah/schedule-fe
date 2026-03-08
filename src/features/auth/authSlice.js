@@ -9,6 +9,7 @@ const tokenFromStorage = localStorage.getItem("token");
 export const login = createAsyncThunk(
   "auth/login",
   async ({ email, password }, thunkAPI) => {
+    console.log(email, password)
     try {
       const res = await api.post("/api/auth/login", { email, password });
       return res.data;
