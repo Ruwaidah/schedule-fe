@@ -48,7 +48,7 @@ export default function LoginPage() {
                         </div>
                     </div>
 
-                    {/* Right side login card */}
+                    {/* Right side */}
                     <LoginCard />
                 </div>
             </div>

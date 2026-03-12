@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { login } from "../../features/auth/authSlice";
 
 import IconEye from "../IconEye";
@@ -16,6 +16,7 @@ function cn(...classes) {
 export default function LoginForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [showPassword, setShowPassword] = useState(false);
   const { status, error } = useSelector((state) => state.auth);
@@ -33,11 +34,13 @@ export default function LoginForm() {
 
   const remember = watch("remember");
   const canSubmit = useMemo(() => isValid && !isLoggingIn, [isValid, isLoggingIn]);
+  console.log(status)
 
   async function onSubmit(values) {
     try {
+      const from = location.state?.from?.pathname || "/dashboard";
       await dispatch(login(values)).unwrap();
-      navigate("/dashboard", { replace: true });
+      navigate(from, { replace: true });
     } catch (errMsg) {
       console.log("Login failed:", errMsg);
     }
