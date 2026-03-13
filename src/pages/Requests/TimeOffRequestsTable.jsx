@@ -1,60 +1,54 @@
-const demo = [
-    { id: 1, employee: "Associate #12", dates: "Mar 18", reason: "Doctor", status: "pending" },
-    { id: 2, employee: "Associate #7", dates: "Mar 20", reason: "Family event", status: "pending" },
-];
+export default function TimeOffRequestsTable({ rows = [], loading }) {
+    if (loading) {
+        return (
+            <div className="space-y-3">
+                <div className="h-12 rounded-2xl bg-slate-100 animate-pulse" />
+                <div className="h-12 rounded-2xl bg-slate-100 animate-pulse" />
+                <div className="h-12 rounded-2xl bg-slate-100 animate-pulse" />
+            </div>
+        );
+    }
 
-function StatusPill({ status }) {
-    const base = "rounded-full border px-3 py-1 text-xs font-semibold";
-    if (status === "approved") return <span className={`${base} border-emerald-200 bg-emerald-50 text-emerald-700`}>Approved</span>;
-    if (status === "denied") return <span className={`${base} border-rose-200 bg-rose-50 text-rose-700`}>Denied</span>;
-    return <span className={`${base} border-amber-200 bg-amber-50 text-amber-700`}>Pending</span>;
-}
+    if (!rows.length) {
+        return (
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+                No time off requests.
+            </div>
+        );
+    }
 
-export default function TimeOffRequestsTable() {
     return (
         <div className="overflow-hidden rounded-2xl border border-slate-200">
             <table className="w-full text-left text-sm">
                 <thead className="bg-slate-50">
                     <tr>
-                        <th className="px-4 py-3 font-semibold text-slate-700">Employee</th>
+                        <th className="px-4 py-3 font-semibold text-slate-700">Associate</th>
                         <th className="px-4 py-3 font-semibold text-slate-700">Dates</th>
+                        <th className="px-4 py-3 font-semibold text-slate-700">Time</th>
                         <th className="px-4 py-3 font-semibold text-slate-700">Reason</th>
                         <th className="px-4 py-3 font-semibold text-slate-700">Status</th>
-                        <th className="px-4 py-3 font-semibold text-slate-700 text-right">Actions</th>
                     </tr>
                 </thead>
-
                 <tbody>
-                    {demo.map((r) => (
-                        <tr key={r.id} className="border-t border-slate-200 bg-white">
-                            <td className="px-4 py-3 text-slate-900">{r.employee}</td>
-                            <td className="px-4 py-3 text-slate-700">{r.dates}</td>
-                            <td className="px-4 py-3 text-slate-700">{r.reason}</td>
-                            <td className="px-4 py-3"><StatusPill status={r.status} /></td>
-                            <td className="px-4 py-3 text-right">
-                                <div className="inline-flex gap-2">
-                                    <button
-                                        className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
-                                        onClick={() => alert("Approve (wire later)")}
-                                    >
-                                        Approve
-                                    </button>
-                                    <button
-                                        className="rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-700 hover:bg-rose-100"
-                                        onClick={() => alert("Deny (wire later)")}
-                                    >
-                                        Deny
-                                    </button>
-                                </div>
+                    {rows.map((r) => (
+                        <tr key={r.id} className="border-t border-slate-200">
+                            <td className="px-4 py-3 text-slate-900">
+                                {r.first_name} {r.last_name}
                             </td>
+                            <td className="px-4 py-3 text-slate-700">
+                                {String(r.start_date).slice(0, 10)} → {String(r.end_date).slice(0, 10)}
+                            </td>
+                            <td className="px-4 py-3 text-slate-700">
+                                {r.start_time && r.end_time
+                                    ? `${String(r.start_time).slice(0, 5)}–${String(r.end_time).slice(0, 5)}`
+                                    : "—"}
+                            </td>
+                            <td className="px-4 py-3 text-slate-700">{r.reason || "—"}</td>
+                            <td className="px-4 py-3 text-slate-700">{r.status}</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-
-            <div className="border-t border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-500">
-                Demo data — connect to /api/time-off-requests later.
-            </div>
         </div>
     );
 }

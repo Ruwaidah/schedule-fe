@@ -1,14 +1,70 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import DashboardHeader from "../Dashboard/DashboardHeader";
+import { api } from "../../api/client";
+
 import TimeOffRequestsTable from "./TimeOffRequestsTable";
 import SwapRequestsTable from "./SwapRequestsTable";
 
-function cn(...classes) {
-    return classes.filter(Boolean).join(" ");
+function Tab({ active, children, onClick }) {
+    return (
+        <button
+            type="button"
+            onClick={onClick}
+            className={[
+                "rounded-lg px-2.5 py-1.5 text-sm font-semibold transition",
+                active ? "bg-blue-50 text-blue-700" : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
+            ].join(" ")}
+        >
+            {children}
+        </button>
+    );
 }
 
 export default function Requests() {
-    const [tab, setTab] = useState("timeoff");
+    const user = useSelector((s) => s.auth.user);
+    const storeId = user?.store_id;
+
+    const [tab, setTab] = useState("timeoff"); // timeoff | swaps
+    const [status, setStatus] = useState("pending");
+
+    const [loading, setLoading] = useState(false);
+    const [err, setErr] = useState(null);
+
+    const [timeOff, setTimeOff] = useState([]);
+    const [swaps, setSwaps] = useState([]);
+    console.log(user)
+
+    useEffect(() => {
+        if (!user) return;
+
+        const params =
+            user.role_code === "ASSOCIATE"
+                ? { status }
+                : { store_id: storeId, status };
+
+        setLoading(true);
+        setErr(null);
+
+        (async () => {
+            try {
+                const [toRes, swRes] = await Promise.all([
+                    api.get("/api/time-off", { params }),
+                    api.get("/api/swaps", { params }),
+                ]);
+
+                setTimeOff(toRes.data || []);
+                setSwaps(swRes.data || []);
+            } catch (e) {
+                console.log(e)
+                setErr("Failed to load requests.");
+                setTimeOff([]);
+                setSwaps([]);
+            } finally {
+                setLoading(false);
+            }
+        })();
+    }, [user, storeId, status]);
 
     return (
         <div className="min-h-screen bg-slate-50">
@@ -19,47 +75,44 @@ export default function Requests() {
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                         <div>
                             <h1 className="text-2xl font-semibold text-slate-900">Requests</h1>
-                            <p className="mt-1 text-sm text-slate-600">
-                                Review and manage time off and shift swap requests.
-                            </p>
+                            <p className="mt-1 text-sm text-slate-600">Time off + shift swaps</p>
                         </div>
 
-                        <div className="flex rounded-2xl border border-slate-200 bg-slate-50 p-1">
-                            <button
-                                type="button"
-                                onClick={() => setTab("timeoff")}
-                                className={cn(
-                                    "rounded-2xl px-4 py-2 text-sm font-semibold transition",
-                                    tab === "timeoff"
-                                        ? "bg-white text-slate-900 shadow-sm"
-                                        : "text-slate-600 hover:text-slate-900"
-                                )}
-                            >
+                        <div className="flex flex-wrap items-center gap-2">
+                            <Tab active={tab === "timeoff"} onClick={() => setTab("timeoff")}>
                                 Time Off
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => setTab("swaps")}
-                                className={cn(
-                                    "rounded-2xl px-4 py-2 text-sm font-semibold transition",
-                                    tab === "swaps"
-                                        ? "bg-white text-slate-900 shadow-sm"
-                                        : "text-slate-600 hover:text-slate-900"
-                                )}
+                            </Tab>
+                            <Tab active={tab === "swaps"} onClick={() => setTab("swaps")}>
+                                Swaps
+                            </Tab>
+
+                            <select
+                                value={status}
+                                onChange={(e) => setStatus(e.target.value)}
+                                className="ml-2 rounded-2xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none"
                             >
-                                Shift Swaps
-                            </button>
+                                <option value="pending">Pending</option>
+                                <option value="approved">Approved</option>
+                                <option value="denied">Denied</option>
+                                <option value="canceled">Canceled</option>
+                            </select>
                         </div>
                     </div>
+
+                    {err ? (
+                        <div className="mt-4 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+                            {err}
+                        </div>
+                    ) : null}
 
                     <div className="mt-6">
-                        {tab === "timeoff" ? <TimeOffRequestsTable /> : <SwapRequestsTable />}
+                        {tab === "timeoff" ? (
+                            <TimeOffRequestsTable rows={timeOff} loading={loading} />
+                        ) : (
+                            <SwapRequestsTable rows={swaps} loading={loading} />
+                        )}
                     </div>
                 </div>
-
-                <p className="mt-6 text-center text-xs text-slate-500">
-                    © {new Date().getFullYear()} Scheduling App. Demo UI for portfolio.
-                </p>
             </div>
         </div>
     );

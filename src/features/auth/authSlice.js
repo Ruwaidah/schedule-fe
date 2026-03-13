@@ -40,10 +40,11 @@ const authSlice = createSlice({
   reducers: {
     logout(state) {
       state.user = null;
-      state.token = localStorage.getItem("token") || null;
+      state.token = null;
       state.status = "idle";
       state.error = null;
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
     },
     setToken(state, action) {
       state.token = action.payload;

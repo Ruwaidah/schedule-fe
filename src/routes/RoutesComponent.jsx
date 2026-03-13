@@ -3,9 +3,12 @@ import LoginPage from "../pages/LoginPage";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import NotFound from "../pages/NotFound";
 import RequireAuth from "./RequireAuth";
-import WeeklySchedule from "../pages/WeeklySchedule/WeeklySchedule";
 import WeeklyRoster from "../pages/Schedule/WeeklyRoster/WeeklyRoster";
 import Requests from "../pages/Requests/Requests";
+import RequireRole from "./RequireRole";
+import MySchedule from "../pages/MySchedule/MySchedule";
+import Reports from "../pages/Reports/Reports";
+import Profile from "../pages/Profile/Profile";
 
 
 export default function RoutesComponent() {
@@ -20,18 +23,12 @@ export default function RoutesComponent() {
 
             {/* Protected */}
             <Route
-                path="/dashboard"
+                path="/my-schedule"
                 element={
                     <RequireAuth>
-                        <Dashboard />
-                    </RequireAuth>
-                }
-            />
-            <Route
-                path="/schedule"
-                element={
-                    <RequireAuth>
-                        <WeeklySchedule />
+                        <RequireRole allow={["ASSOCIATE"]}>
+                            <MySchedule />
+                        </RequireRole>
                     </RequireAuth>
                 }
             />
@@ -40,7 +37,28 @@ export default function RoutesComponent() {
                 path="/roster"
                 element={
                     <RequireAuth>
-                        <WeeklyRoster />
+                        <RequireRole allow={["ADMIN", "HR", "COACH", "TEAM_LEAD"]}>
+                            <WeeklyRoster />
+                        </RequireRole>
+                    </RequireAuth>
+                }
+            />
+
+            <Route
+                path="/reports"
+                element={
+                    <RequireAuth>
+                        <RequireRole allow={["ADMIN", "HR", "COACH", "TEAM_LEAD"]}>
+                            <Reports />
+                        </RequireRole>
+                    </RequireAuth>
+                }
+            />
+            <Route
+                path="/dashboard"
+                element={
+                    <RequireAuth>
+                        <Dashboard />
                     </RequireAuth>
                 }
             />
@@ -50,6 +68,15 @@ export default function RoutesComponent() {
                 element={
                     <RequireAuth>
                         <Requests />
+                    </RequireAuth>
+                }
+            />
+
+            <Route
+                path="/profile"
+                element={
+                    <RequireAuth>
+                        <Profile />
                     </RequireAuth>
                 }
             />
