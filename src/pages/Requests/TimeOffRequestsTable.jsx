@@ -1,3 +1,7 @@
+import StatusPill from "../../components/StatusPill";
+
+
+
 export default function TimeOffRequestsTable({ rows = [], loading }) {
     if (loading) {
         return (
@@ -44,7 +48,9 @@ export default function TimeOffRequestsTable({ rows = [], loading }) {
                                     : "—"}
                             </td>
                             <td className="px-4 py-3 text-slate-700">{r.reason || "—"}</td>
-                            <td className="px-4 py-3 text-slate-700">{r.status}</td>
+                            <td className="px-4 py-3">
+  <StatusPill status={r.status} />
+</td>
                         </tr>
                     ))}
                 </tbody>

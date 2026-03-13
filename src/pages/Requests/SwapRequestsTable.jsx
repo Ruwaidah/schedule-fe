@@ -1,3 +1,5 @@
+import StatusPill from "../../components/StatusPill";
+
 export default function SwapRequestsTable({ rows = [], loading }) {
     if (loading) {
         return (
@@ -42,7 +44,9 @@ export default function SwapRequestsTable({ rows = [], loading }) {
                                 {r.department_id ? `#${r.department_id}` : "—"}
                             </td>
                             <td className="px-4 py-3 text-slate-700">{r.notes || "—"}</td>
-                            <td className="px-4 py-3 text-slate-700">{r.status}</td>
+                            <td className="px-4 py-3">
+                                <StatusPill status={r.status} />
+                            </td>
                         </tr>
                     ))}
                 </tbody>

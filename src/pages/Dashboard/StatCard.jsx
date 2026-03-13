@@ -1,4 +1,5 @@
 export default function StatCard({ title, value, hint }) {
+  console.log(title)
   return (
     <div className="rounded-3xl border border-slate-200/70 bg-white p-5 shadow-sm">
       <p className="text-sm font-medium text-slate-600">{title}</p>
