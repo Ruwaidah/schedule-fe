@@ -48,7 +48,6 @@ export default function Profile() {
                         <button
                             type="button"
                             className="mt-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-                            onClick={() => alert("Connect this to change password flow later")}
                         >
                             Change password
                         </button>
