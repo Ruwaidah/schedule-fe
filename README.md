@@ -1,16 +1,63 @@
-# React + Vite
+# Retail Scheduling App — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A role-based scheduling UI for a multi-department retail store environment.  
+Includes **Manager (HR/Admin/Lead)** and **Associate** experiences, weekly schedule views, and request workflows (time off + shift swaps).
 
-Currently, two official plugins are available:
+> Portfolio project — not affiliated with any real company.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Live Demo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Frontend:
+https://schedule-fe-jmpv.onrender.com
 
-## Expanding the ESLint configuration
+Backend API:
+https://schedule-be-1mws.onrender.com
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Features
+
+### Authentication & Roles (RBAC)
+- JWT login with company account
+- Role-based routes + UI:
+  - **Associate**: My Schedule + My Requests
+  - **Manager** (ADMIN/HR/COACH/TEAM_LEAD): Dashboard + Weekly Roster + Requests + Reports
+
+### Scheduling
+- Week runs **Saturday → Friday**
+- Week navigation (prev/next)
+- Department filtering (manager view)
+- Shift create/edit/delete rules enforced by backend:
+  - No edits for past days
+  - Weeks can be **published/draft/locked** (from `schedule_weeks`)
+  - Shift status is automatically enforced by week status
+
+### Requests (Real Data)
+- Time Off Requests
+- Shift Swap Requests
+- Dashboard shows real pending counts + latest requests
+
+### Conflicts
+- Shift conflicts from backend endpoint:
+  - Detects overlapping shifts for the same associate on the same day
+  - Associates see their own conflicts; managers see store-wide conflicts
+
+---
+
+## Tech Stack
+- React (Vite)
+- Tailwind CSS
+- Redux Toolkit
+- React Router
+- Axios (with auth interceptors)
+
+---
+
+## Environment Variables
+
+Create a `.env` file in the project root:
+
+```bash
+VITE_API_URL=https://schedule-be-1mws.onrender.com

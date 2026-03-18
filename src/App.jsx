@@ -1,13 +1,15 @@
-import LoginPage from "./pages/LoginPage"
 import { BrowserRouter } from "react-router-dom"
 import RoutesComponent from "./routes/RoutesComponent"
+import AuthGate from "./components/AuthGate"
 
 
 function App() {
 
   return (
     <BrowserRouter>
-      <RoutesComponent />
+      <AuthGate>
+        <RoutesComponent />
+      </AuthGate>
     </BrowserRouter>
   )
 }
