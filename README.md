@@ -41,8 +41,8 @@ https://schedule-be-1mws.onrender.com
 
 ### Conflicts
 - Shift conflicts from backend endpoint:
-  - Detects overlapping shifts for the same associate on the same day
-  - Associates see their own conflicts; managers see store-wide conflicts
+  - Detects overlapping shifts for the same associate on the same day.
+  - Associates see their own conflicts; managers see store-wide conflicts.
 
 ---
 
