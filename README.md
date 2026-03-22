@@ -12,9 +12,6 @@ Includes **Manager (HR/Admin/Lead)** and **Associate** experiences, weekly sched
 Frontend:
 https://schedule-fe-jmpv.onrender.com
 
-Backend API:
-https://schedule-be-1mws.onrender.com
-
 ---
 
 ## Features
@@ -60,4 +57,4 @@ https://schedule-be-1mws.onrender.com
 Create a `.env` file in the project root:
 
 ```bash
-VITE_API_URL=https://schedule-be-1mws.onrender.com
+VITE_API_URL
