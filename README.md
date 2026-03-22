@@ -9,7 +9,7 @@ Includes **Manager (HR/Admin/Lead)** and **Associate** experiences, weekly sched
 
 ## Live Demo
 
-🔗 [schedule](https://schedule-fe-jmpv.onrender.com)
+🔗 [Schedule](https://schedule-fe-jmpv.onrender.com)
 
 ---
 
