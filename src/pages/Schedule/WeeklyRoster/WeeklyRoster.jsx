@@ -26,6 +26,7 @@ import RosterHeader from "./RosterHeader";
 import ShiftCard from "./ShiftCard";
 import EditShiftModal from "../EditShiftModal";
 import CreateShiftModal from "../../WeeklySchedule/CreateShiftModal";
+import DashboardHeader from "../../Dashboard/DashboardHeader";
 
 export default function WeeklyRoster() {
   const dispatch = useDispatch();
@@ -264,6 +265,7 @@ export default function WeeklyRoster() {
 
   return (
     <div className="min-h-screen bg-slate-50">
+      <DashboardHeader />
       <div className="mx-auto max-w-7xl px-4 py-8">
         <RosterHeader
           start_date={start_date}
