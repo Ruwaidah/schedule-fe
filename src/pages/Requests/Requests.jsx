@@ -33,7 +33,6 @@ export default function Requests() {
 
     const [timeOff, setTimeOff] = useState([]);
     const [swaps, setSwaps] = useState([]);
-    console.log(user)
 
     useEffect(() => {
         if (!user) return;
@@ -56,7 +55,6 @@ export default function Requests() {
                 setTimeOff(toRes.data || []);
                 setSwaps(swRes.data || []);
             } catch (e) {
-                console.log(e)
                 setErr("Failed to load requests.");
                 setTimeOff([]);
                 setSwaps([]);

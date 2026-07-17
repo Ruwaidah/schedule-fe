@@ -32,8 +32,6 @@ export default function TodaySchedulePanel() {
     return list;
   }, [shifts, todayKey]);
 
-  console.log(todayShifts)
-
   return (
     <section className="rounded-3xl border border-slate-200/70 bg-white/70 p-6 shadow-sm backdrop-blur lg:col-span-1">
       <div className="flex items-start justify-between gap-3">

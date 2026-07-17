@@ -9,6 +9,8 @@ import RequireRole from "./RequireRole";
 import MySchedule from "../pages/MySchedule/MySchedule";
 import Reports from "../pages/Reports/Reports";
 import Profile from "../pages/Profile/Profile";
+import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
+import DemoPage from "../pages/DemoPage";
 
 
 export default function RoutesComponent() {
@@ -32,7 +34,7 @@ export default function RoutesComponent() {
                     </RequireAuth>
                 }
             />
-
+            <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route
                 path="/roster"
                 element={
@@ -80,6 +82,7 @@ export default function RoutesComponent() {
                     </RequireAuth>
                 }
             />
+            <Route path="/demo" element={<DemoPage />} />
             <Route path="*" element={<NotFound />} />
         </Routes>
     );

@@ -3,6 +3,15 @@ import StatusPill from "../../components/StatusPill";
 
 
 export default function TimeOffRequestsTable({ rows = [], loading }) {
+
+    const uniqueRequests = Array.from(
+        new Map(
+            rows.map((request) => [
+                `${request.id}-${request.user_id}`,
+                request,
+            ])
+        ).values()
+    );
     if (loading) {
         return (
             <div className="space-y-3">
@@ -34,8 +43,8 @@ export default function TimeOffRequestsTable({ rows = [], loading }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {rows.map((r) => (
-                        <tr key={r.id} className="border-t border-slate-200">
+                    {uniqueRequests.map((r, index) => (
+                        <tr key={`${r.id}-${r.user_id}-${r.start_date}-${index}`} className="border-t border-slate-200">
                             <td className="px-4 py-3 text-slate-900">
                                 {r.first_name} {r.last_name}
                             </td>
@@ -49,8 +58,8 @@ export default function TimeOffRequestsTable({ rows = [], loading }) {
                             </td>
                             <td className="px-4 py-3 text-slate-700">{r.reason || "—"}</td>
                             <td className="px-4 py-3">
-  <StatusPill status={r.status} />
-</td>
+                                <StatusPill status={r.status} />
+                            </td>
                         </tr>
                     ))}
                 </tbody>

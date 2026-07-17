@@ -16,16 +16,16 @@ Includes **Manager (HR/Admin/Lead)** and **Associate** experiences, weekly sched
 ## Features
 
 ### Authentication & Roles (RBAC)
-- JWT login with company account
-- Role-based routes + UI:
+  - JWT login with company account
+  - Role-based routes + UI:
   - **Associate**: My Schedule + My Requests
   - **Manager** (ADMIN/HR/COACH/TEAM_LEAD): Dashboard + Weekly Roster + Requests + Reports
 
 ### Scheduling
-- Week runs **Saturday → Friday**
-- Week navigation (prev/next)
-- Department filtering (manager view)
-- Shift create/edit/delete rules enforced by backend:
+  - Week runs **Saturday → Friday**
+  - Week navigation (prev/next)
+  - Department filtering (manager view)
+  - Shift create/edit/delete rules enforced by backend:
   - No edits for past days
   - Weeks can be **published/draft/locked** (from `schedule_weeks`)
   - Shift status is automatically enforced by week status

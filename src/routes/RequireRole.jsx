@@ -1,12 +1,16 @@
 import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 export default function RequireRole({ allow, children }) {
-  const user = useSelector((s) => s.auth.user);
-  if (!user) return <Navigate to="/login" replace />;
+  const user = JSON.parse(localStorage.getItem("user") || "null");
 
-  const ok = allow.includes(user.role_code);
-  if (!ok) return <Navigate to="/dashboard" replace />;
+  // Demo visitors can view every portfolio page
+  if (user?.is_demo) {
+    return children;
+  }
+
+  if (!user?.role_code || !allow.includes(user.role_code)) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   return children;
 }

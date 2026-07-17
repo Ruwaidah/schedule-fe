@@ -29,7 +29,6 @@ export const fetchShifts = createAsyncThunk(
 // create shift
 export const createShift = createAsyncThunk("shifts/createShift", async (payload, thunkAPI) => {
   try {
-    console.log(payload)
     const res = await api.post("/api/shifts", payload);
     return res.data;
   } catch (err) {

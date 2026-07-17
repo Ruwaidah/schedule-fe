@@ -40,7 +40,6 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Manager panels */}
           {!assoc ? (
             <>
               <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -54,7 +53,6 @@ export default function Dashboard() {
               </div>
             </>
           ) : (
-            /* Associate panels */
             <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
               <TodaySchedulePanel />
               <PendingRequestsPanel />

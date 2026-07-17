@@ -5,6 +5,7 @@ import departmentsReducer from "../features/departments/departmentsSlice"
 import weeksReducer from "../features/weeks/weeksSlice"
 import scheduleReducer from "../features/schedule/scheduleSlice";
 import employeesReducer from "../features/employees/employeesSlice";
+import demoReducer from "../features/demo/demoSlice"
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     departments: departmentsReducer,
     weeks: weeksReducer,
     schedule: scheduleReducer,
-    employees: employeesReducer
+    employees: employeesReducer,
+    demo: demoReducer,
   },
 });

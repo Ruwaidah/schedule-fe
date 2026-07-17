@@ -28,6 +28,7 @@ export default function LoginCard() {
                     </div>
 
                     <LoginForm />
+                    
                 </div>
 
                 <p className="mx-auto mt-4 max-w-lg text-center text-xs text-slate-500">
