@@ -30,6 +30,7 @@ export default function DashboardHeader() {
         navigate("/login", { replace: true });
     }
 
+    console.log(user)
 
     return (
         <header className="sticky top-0 z-10 border-b border-slate-200/70 bg-white/80 backdrop-blur">
