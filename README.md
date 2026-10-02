@@ -1,4 +1,4 @@
-# Retail Scheduling App — Frontend
+# Scheduling App — Frontend
 
 A role-based scheduling UI for a multi-department retail store environment.  
 Includes **Manager (HR/Admin/Lead)** and **Associate** experiences, weekly schedule views, and request workflows (time off + shift swaps).
