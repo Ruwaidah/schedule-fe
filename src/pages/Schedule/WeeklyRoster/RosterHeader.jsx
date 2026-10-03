@@ -10,13 +10,22 @@ export default function RosterHeader({
   onPrevWeek,
   onNextWeek,
   isLoading,
-  weekStatus
+  weekStatus,
+  departmentScheduledHours,
 }) {
-
   function badgeClass(status) {
-    if (status === "published") return "border-emerald-200 bg-emerald-50 text-emerald-700";
-    if (status === "draft") return "border-amber-200 bg-amber-50 text-amber-700";
-    if (status === "locked") return "border-slate-200 bg-slate-100 text-slate-700";
+    if (status === "published") {
+      return "border-emerald-200 bg-emerald-50 text-emerald-700";
+    }
+
+    if (status === "draft") {
+      return "border-amber-200 bg-amber-50 text-amber-700";
+    }
+
+    if (status === "locked") {
+      return "border-slate-200 bg-slate-100 text-slate-700";
+    }
+
     return "border-slate-200 bg-white text-slate-600";
   }
 
@@ -24,33 +33,51 @@ export default function RosterHeader({
     <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
         <div className="flex items-center gap-3">
-          <h1 className="text-2xl font-semibold text-slate-900">Weekly Roster</h1>
-          <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${badgeClass(weekStatus)}`}>
+          <h1 className="text-2xl font-semibold text-slate-900">
+            Weekly Roster
+          </h1>
+
+          <span
+            className={`rounded-full border px-3 py-1 text-xs font-semibold ${badgeClass(
+              weekStatus
+            )}`}
+          >
             {`Status: ${weekStatus}`}
           </span>
         </div>
+
         <p className="mt-1 text-sm text-slate-600">
           {start_date} → {end_date} (Sat–Fri)
         </p>
+
         <p className="mt-1 text-xs text-slate-500">
           Auto-managed every Saturday (current + next 2 published, week 3 draft).
         </p>
+
         {viewingWeekOffset < 0 ? (
-          <p className="mt-1 text-xs text-slate-500">Past week (view only)</p>
+          <p className="mt-1 text-xs text-slate-500">
+            Past week (view only)
+          </p>
         ) : viewingWeekOffset > 3 ? (
-          <p className="mt-1 text-xs text-slate-500">Future week (locked)</p>
+          <p className="mt-1 text-xs text-slate-500">
+            Future week (locked)
+          </p>
         ) : null}
       </div>
 
       <div className="flex flex-wrap items-end gap-3">
         <div className="space-y-1">
-          <label className="text-xs font-medium text-slate-600">Department</label>
+          <label className="text-xs font-medium text-slate-600">
+            Department
+          </label>
+
           <select
             value={departmentId}
             onChange={(e) => setDepartmentId(e.target.value)}
             className="w-56 rounded-2xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-200/50"
           >
             <option value="">All departments</option>
+
             {departments.map((d) => (
               <option key={d.id} value={String(d.id)}>
                 {d.name}
@@ -60,7 +87,20 @@ export default function RosterHeader({
         </div>
 
         <div className="space-y-1">
-          <label className="text-xs font-medium text-slate-600">Week of</label>
+          <label className="text-xs font-medium text-slate-600">
+            Scheduled hours
+          </label>
+
+          <div className="flex h-[42px] items-center rounded-2xl border border-blue-200 bg-blue-50 px-4 text-sm font-semibold text-blue-700">
+            {Number(departmentScheduledHours || 0).toFixed(1)} hrs
+          </div>
+        </div>
+
+        <div className="space-y-1">
+          <label className="text-xs font-medium text-slate-600">
+            Week of
+          </label>
+
           <input
             type="date"
             value={anchorDate}

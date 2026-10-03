@@ -73,6 +73,24 @@ export default function WeeklyRoster() {
 
   const rosterEmployees = departmentId ? deptEmployees : employees;
 
+  const departmentScheduledHours = useMemo(() => {
+    return shifts.reduce((total, shift) => {
+      if (
+        departmentId &&
+        Number(shift.department_id) !== Number(departmentId)
+      ) {
+        return total;
+      }
+
+      const { paidHours } = getShiftHours(
+        shift.start_time,
+        shift.end_time
+      );
+
+      return total + paidHours;
+    }, 0);
+  }, [shifts, departmentId]);
+
 
   useEffect(() => {
     if (!storeId) return;
@@ -276,10 +294,15 @@ export default function WeeklyRoster() {
           departments={departments}
           anchorDate={anchorDate}
           setAnchorDate={setAnchorDate}
-          onPrevWeek={() => setAnchorDate(toYYYYMMDD(addDays(weekEnd, -7)))}
-          onNextWeek={() => setAnchorDate(toYYYYMMDD(addDays(weekEnd, 7)))}
+          onPrevWeek={() =>
+            setAnchorDate(toYYYYMMDD(addDays(weekEnd, -7)))
+          }
+          onNextWeek={() =>
+            setAnchorDate(toYYYYMMDD(addDays(weekEnd, 7)))
+          }
           isLoading={isLoading}
           weekStatus={weekStatus}
+          departmentScheduledHours={departmentScheduledHours}
         />
 
         {error ? (
